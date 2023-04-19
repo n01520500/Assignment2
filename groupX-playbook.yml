@@ -1,0 +1,29 @@
+- name: GroupX Playbook
+  hosts: linux
+  become: true
+
+  roles:
+    - system_profile
+    - webserver
+
+- name: Configure web server
+  hosts: linux
+  become: true
+  vars:
+    host_files:
+      - { src: "vm1.html.j2", dest: "/tmp/vm1.html" }
+      - { src: "vm2.html.j2", dest: "/tmp/vm2.html" }
+  roles:
+    - role: webserver
+      vars:
+        apache_port: 8080
+
+    - role: users
+      vars:
+        cloudadmins_group: cloudadmins
+        users:
+          - name: user1000
+            group: "{{ cloudadmins_group }}"
+          - name: user2000
+            group: "{{ cloudadmins_group }}"
+

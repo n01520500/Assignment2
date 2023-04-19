@@ -1,0 +1,7 @@
+cloudadmins_group: cloudadmins
+users:
+  - name: user1000
+    group: "{{ cloudadmins_group }}"
+  - name: user2000
+    group: "{{ cloudadmins_group }}"
+

@@ -1,0 +1,14 @@
+- name: Add test block to /etc/profile
+  lineinfile:
+    path: /etc/profile
+    line: '#This is a test block added by Ansible......adminuser'
+    insertafter: EOF
+  become: true
+
+- name: Add TMOUT to /etc/profile
+  lineinfile:
+    path: /etc/profile
+    line: 'export TMOUT=1800'
+    insertafter: '#This is a test block added by Ansible......adminuser'
+  become: true
+

@@ -1,0 +1,5 @@
+apache_port: 80
+host_files:
+  - { src: "vm1.html.j2", dest: "/tmp/vm1.html" }
+  - { src: "vm2.html.j2", dest: "/tmp/vm2.html" }
+

@@ -1,0 +1,10 @@
+---
+# vars file for datadisk
+data_disk_name: "datadisk"
+part1_size: "4GB"
+part1_fs_type: "xfs"
+part1_mount_point: "/part1"
+part2_size: "5GB"
+part2_fs_type: "ext4"
+part2_mount_point: "/part2"
+

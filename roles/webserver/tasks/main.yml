@@ -1,0 +1,32 @@
+---
+- name: Install Apache web server
+  yum:
+    name: httpd
+    state: present
+
+- name: Create host files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop: "{{ host_files }}"
+
+- name: Copy index.html files to remote hosts
+  copy:
+    src: "{{ item.dest }}"
+    dest: "/var/www/html/index.html"
+    mode: 0444
+    remote_src: yes
+  loop: "{{ host_files }}"
+  notify: start Apache web server
+
+- name: Ensure Apache service is started
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Add Apache autostart
+  systemd:
+    name: httpd
+    enabled: yes
+

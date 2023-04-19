@@ -1,0 +1,5 @@
+- name: Create hostname files
+  template:
+    src: templates/vm.html.j2
+    dest: /tmp/{{ inventory_hostname }}.html
+

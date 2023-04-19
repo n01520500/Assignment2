@@ -1,0 +1,49 @@
+---
+- name: Partition data disk
+  parted:
+    device: "/dev/{{ data_disk_name }}"
+    number: "1"
+    state: "present"
+    align: "optimal"
+    part_end: "{{ part1_size }}"
+  register: part1_result
+  when: part1_size is defined
+
+- name: Create filesystem on partition 1
+  filesystem:
+    fstype: "{{ part1_fs_type }}"
+    dev: "/dev/{{ data_disk_name }}1"
+  when: part1_result is defined and part1_result.changed
+
+- name: Mount partition 1
+  mount:
+    path: "{{ part1_mount_point }}"
+    src: "/dev/{{ data_disk_name }}1"
+    fstype: "{{ part1_fs_type }}"
+    state: "mounted"
+  when: part1_result is defined and part1_result.changed
+
+- name: Partition data disk
+  parted:
+    device: "/dev/{{ data_disk_name }}"
+    number: "2"
+    state: "present"
+    align: "optimal"
+    part_end: "{{ part2_size }}"
+  register: part2_result
+  when: part2_size is defined
+
+- name: Create filesystem on partition 2
+  filesystem:
+    fstype: "{{ part2_fs_type }}"
+    dev: "/dev/{{ data_disk_name }}2"
+  when: part2_result is defined and part2_result.changed
+
+- name: Mount partition 2
+  mount:
+    path: "{{ part2_mount_point }}"
+    src: "/dev/{{ data_disk_name }}2"
+    fstype: "{{ part2_fs_type }}"
+    state: "mounted"
+  when: part2_result is defined and part2_result.changed
+

@@ -1,0 +1,26 @@
+[linux]
+vm-0500-1 ansible_host=20.25.73.138 ansible_user=adminuser
+vm-0500-2 ansible_host=20.121.204.1 ansible_user=adminuser
+
+[windows]
+20.172.152.242
+
+[os:children]
+linux
+windows
+
+[linux:vars]
+ansible_connection=ssh
+
+[windows:vars]
+
+ansible_user=Kavya
+ansible_password=Kavya@1101
+ansible_connection=winrm
+ansible_port=5985
+ansible_winrm_transport=ntlm
+ansible_winrm_scheme=http
+ansible_winrm_server_cert_validation=ignore
+ansible_become=false
+
+
